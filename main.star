@@ -264,12 +264,10 @@ def _create_optimism_backend(plan, config, postgres_output, verif_url, optimism_
             utils.HTTP_APPLICATION_PROTOCOL,
         )
     }
-    
-    public_ports = None
-    if port_publisher:
-        public_ports = {}
-        for port_id, port_spec in used_ports.items():
-            public_ports[port_id] = port_publisher.publish_port(port_id, port_spec)
+
+    public_ports = {}
+    if "port_publisher" in config and config["port_publisher"]:
+        public_ports = {"http": used_ports}
     
     env_vars = {
         "ETHEREUM_JSONRPC_VARIANT": "geth",
