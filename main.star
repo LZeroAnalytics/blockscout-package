@@ -27,9 +27,9 @@ DEFAULT_VALUES = {
     
     # Image defaults
     "postgres_image": "library/postgres:alpine",
-    "blockscout_image": "blockscout/blockscout:5.4.0",
-    "blockscout_verifier_image": "ghcr.io/blockscout/smart-contract-verifier:v1.9.0",
-    "blockscout_frontend_image": "blockscout/frontend:latest",
+    "blockscout_image": "blockscout/blockscout:latest",
+    "blockscout_verifier_image": "ghcr.io/blockscout/smart-contract-verifier:latest",
+    "blockscout_frontend_image": "ghcr.io/blockscout/frontend:latest",
     
     # Ethereum defaults
     "network_name": "Kurtosis",
