@@ -28,6 +28,7 @@ DEFAULT_VALUES = {
     # Image defaults
     "postgres_image": "library/postgres:alpine",
     "blockscout_image": "blockscout/blockscout:latest",
+    "blockscout_optimism_image": "blockscout/blockscout-optimism:6.8.0",
     "blockscout_verifier_image": "ghcr.io/blockscout/smart-contract-verifier:latest",
     "blockscout_frontend_image": "ghcr.io/blockscout/frontend:latest",
     
@@ -326,7 +327,7 @@ def _create_optimism_backend(plan, config, postgres_output, verif_url, optimism_
             env_vars[key] = value
     
     backend_config = ServiceConfig(
-        image=optimism_args.get("blockscout_image", config["blockscout_image"]),
+        image=optimism_args.get("blockscout_optimism_image", config["blockscout_optimism_image"]),
         ports=used_ports,
         public_ports=public_ports,
         cmd=[
