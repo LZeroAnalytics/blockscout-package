@@ -33,7 +33,7 @@ DEFAULT_VALUES = {
     "blockscout_frontend_image": "ghcr.io/blockscout/frontend:latest",
     
     # Ethereum defaults
-    "network_name": "Kurtosis",
+    "network_name": "Bloctopus",
     "network_id": "31337",
     "coin": "ETH",
     "is_testnet": "true",
@@ -73,6 +73,7 @@ def run(
     """
     config = dict(DEFAULT_VALUES)
     
+    # Override defaults with user-provided general args
     for key, value in general_args.items():
         config[key] = value
     
@@ -371,13 +372,13 @@ def _create_frontend_service(plan, config, blockscout_service, ethereum_args, no
             blockscout_service.ip_address,
             blockscout_service.ports[config["http_port_id"]].number,
         ),
+        "NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID": config["wallet_connect_id"],
         "NEXT_PUBLIC_AD_BANNER_PROVIDER": "none",
         "NEXT_PUBLIC_AD_TEXT_PROVIDER": "none",
         "NEXT_PUBLIC_IS_TESTNET": config["is_testnet"],
         "NEXT_PUBLIC_GAS_TRACKER_ENABLED": "true",
         "NEXT_PUBLIC_HAS_BEACON_CHAIN": config["has_beacon_chain"],
         "NEXT_PUBLIC_NETWORK_VERIFICATION_TYPE": "validation",
-        "NEXT_PUBLIC_NETWORK_ICON": "https://ethpandaops.io/logo.png",
         "NEXT_PUBLIC_APP_PROTOCOL": "http",
         "NEXT_PUBLIC_APP_HOST": "127.0.0.1",
         "NEXT_PUBLIC_APP_PORT": str(config["http_port_number_frontend"]),
