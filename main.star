@@ -48,6 +48,9 @@ DEFAULT_VALUES = {
 
     # General defaults
     "wallet_connect_id": "",
+    "api_protocol": "http",
+    "ws_protocol": "ws",
+    "app_host": "127.0.0.1",
 }
 
 def run(
@@ -368,8 +371,8 @@ def _create_frontend_service(plan, config, blockscout_service, ethereum_args, no
     rpc_url = ethereum_args.get("rpc_url", "http://localhost:8545")
     
     env_vars = {
-        "NEXT_PUBLIC_API_PROTOCOL": "http",
-        "NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL": "ws",
+        "NEXT_PUBLIC_API_PROTOCOL": config["api_protocol"],
+        "NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL": config["ws_protocol"],
         "NEXT_PUBLIC_NETWORK_NAME": config["network_name"],
         "NEXT_PUBLIC_NETWORK_ID": config["network_id"],
         "NEXT_PUBLIC_NETWORK_RPC_URL": rpc_url,
@@ -384,8 +387,8 @@ def _create_frontend_service(plan, config, blockscout_service, ethereum_args, no
         "NEXT_PUBLIC_GAS_TRACKER_ENABLED": "true",
         "NEXT_PUBLIC_HAS_BEACON_CHAIN": config["has_beacon_chain"],
         "NEXT_PUBLIC_NETWORK_VERIFICATION_TYPE": "validation",
-        "NEXT_PUBLIC_APP_PROTOCOL": "http",
-        "NEXT_PUBLIC_APP_HOST": "127.0.0.1",
+        "NEXT_PUBLIC_APP_PROTOCOL": config["api_protocol"],
+        "NEXT_PUBLIC_APP_HOST": config["app_host"],
         "NEXT_PUBLIC_APP_PORT": str(config["http_port_number_frontend"]),
         "NEXT_PUBLIC_USE_NEXT_JS_PROXY": "true",
         "PORT": str(config["http_port_number_frontend"]),
