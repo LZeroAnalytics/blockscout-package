@@ -12,7 +12,7 @@ DEFAULT_VALUES = {
     "http_port_id": "http",
     "http_port_number": 4000,
     "http_port_number_verif": 8050,
-    "http_port_number_frontend": 3001,
+    "http_port_number_frontend": 3000,
     
     # Resource allocations
     "blockscout_min_cpu": 100,
