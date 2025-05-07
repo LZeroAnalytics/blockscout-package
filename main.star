@@ -4,7 +4,7 @@ postgres = import_module("github.com/kurtosis-tech/postgres-package/main.star")
 # Default values for Blockscout deployment
 DEFAULT_VALUES = {
     # Service names
-    "service_name_blockscout": "blockscout",
+    "service_name_blockscout": "blockscout-backend",
     "service_name_blockscout_verifier": "blockscout-verifier",
     "service_name_blockscout_frontend": "blockscout-frontend",
     
