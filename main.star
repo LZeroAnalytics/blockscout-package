@@ -396,6 +396,7 @@ def _create_frontend_service(plan, config, blockscout_service, ethereum_args, no
 
         "NEXT_PUBLIC_APP_PORT": str(config["http_port_number_frontend"]),
         "NEXT_PUBLIC_USE_NEXT_JS_PROXY": "false" if hasattr(config, "api_host") else "true",
+        "PORT": str(config["http_port_number_frontend"]),
     }
     
     if "frontend_env_vars" in ethereum_args:
