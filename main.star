@@ -51,6 +51,7 @@ DEFAULT_VALUES = {
     "api_protocol": "http",
     "ws_protocol": "ws",
     "app_host": "127.0.0.1",
+    "api_host": "",
 }
 
 def run(
@@ -373,12 +374,12 @@ def _create_frontend_service(plan, config, blockscout_service, ethereum_args, no
     rpc_url = ethereum_args.get("rpc_url", "http://localhost:8545")
     plan.print("Config object")
     plan.print(config)
-    if hasattr(config, "api_host"):
+    if config["api_host"]:
         rpc_url = "https://" + config["api_host"].replace("blockscout-backend", "rpc")
         plan.print("Using public RPC: " + rpc_url)
     
     env_vars = {
-        "NEXT_PUBLIC_API_HOST": config["api_host"] if hasattr(config, "api_host") else "{}:{}".format(
+        "NEXT_PUBLIC_API_HOST": config["api_host"] if config["api_host"] else "{}:{}".format(
             blockscout_service.ip_address,
             blockscout_service.ports[config["http_port_id"]].number,
         ),
