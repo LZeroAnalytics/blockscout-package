@@ -371,6 +371,7 @@ def _create_frontend_service(plan, config, blockscout_service, ethereum_args, no
     public_ports = frontend_used_ports
     
     rpc_url = ethereum_args.get("rpc_url", "http://localhost:8545")
+    plan.print("Config object: " + config)
     if hasattr(config, "api_host"):
         rpc_url = "https://" + config["api_host"].replace("blockscout-backend", "rpc")
         plan.print("Using public RPC: " + rpc_url)
