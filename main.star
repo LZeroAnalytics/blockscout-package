@@ -376,7 +376,7 @@ def _create_frontend_service(plan, config, blockscout_service, ethereum_args, no
         "NEXT_PUBLIC_NETWORK_NAME": config["network_name"],
         "NEXT_PUBLIC_NETWORK_ID": config["network_id"],
         "NEXT_PUBLIC_NETWORK_RPC_URL": rpc_url,
-        "NEXT_PUBLIC_API_HOST": "{}:{}".format(
+        "NEXT_PUBLIC_API_HOST": config["api_host"] if hasattr(config, "api_host") else "{}:{}".format(
             blockscout_service.ip_address,
             blockscout_service.ports[config["http_port_id"]].number,
         ),
