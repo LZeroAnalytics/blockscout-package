@@ -384,6 +384,10 @@ def _create_frontend_service(plan, config, blockscout_service, ethereum_args, no
         "NEXT_PUBLIC_API_PROTOCOL": config["api_protocol"],
         "NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL": config["ws_protocol"],
         "NEXT_PUBLIC_NETWORK_NAME": config["network_name"],
+        "NEXT_PUBLIC_NETWORK_SHORT_NAME": config["network_name"],
+        "NEXT_PUBLIC_NETWORK_CURRENCY_NAME": "Ether",
+        "NEXT_PUBLIC_NETWORK_CURRENCY_SYMBOL": "ETH",
+        "NEXT_PUBLIC_NETWORK_CURRENCY_DECIMALS": "18",
         "NEXT_PUBLIC_NETWORK_RPC_URL": rpc_url,
         "NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID": config["wallet_connect_id"],
         "NEXT_PUBLIC_AD_BANNER_PROVIDER": "none",
@@ -394,9 +398,7 @@ def _create_frontend_service(plan, config, blockscout_service, ethereum_args, no
         "NEXT_PUBLIC_NETWORK_VERIFICATION_TYPE": "validation",
         "NEXT_PUBLIC_APP_PROTOCOL": config["api_protocol"],
 
-        "NEXT_PUBLIC_APP_PORT": str(config["http_port_number_frontend"]),
         "NEXT_PUBLIC_USE_NEXT_JS_PROXY": "false" if hasattr(config, "api_host") else "true",
-        "PORT": str(config["http_port_number_frontend"]),
     }
     
     if "frontend_env_vars" in ethereum_args:
