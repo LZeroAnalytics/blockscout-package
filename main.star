@@ -174,6 +174,7 @@ def _create_ethereum_backend(plan, config, postgres_output, verif_url, ethereum_
     service_name = config["service_name_blockscout"]
     
     el_client_rpc_url = ethereum_args.get("rpc_url")
+    el_client_ws_url = ethereum_args.get("ws_url")
     el_client_name = ethereum_args.get("client_name", "geth")
     
     if not el_client_rpc_url:
@@ -204,6 +205,7 @@ def _create_ethereum_backend(plan, config, postgres_output, verif_url, ethereum_
         "ETHEREUM_JSONRPC_VARIANT": "erigon" if el_client_name in ["erigon", "reth"] else el_client_name,
         "ETHEREUM_JSONRPC_HTTP_URL": el_client_rpc_url,
         "ETHEREUM_JSONRPC_TRACE_URL": el_client_rpc_url,
+        "ETHEREUM_JSONRPC_WS_URL": el_client_ws_url,
         "DATABASE_URL": database_url,
         "COIN": config["coin"],
         "MICROSERVICE_SC_VERIFIER_ENABLED": "true",
