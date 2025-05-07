@@ -45,6 +45,9 @@ DEFAULT_VALUES = {
     "optimism_l1_batch_inbox": "0xff00000000000000000000000000000000042069",
     "optimism_l1_batch_submitter": "0x776463f498A63a42Ac1AFc7c64a4e5A9ccBB4d32",
     "optimism_l2_message_passer_contract": "0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
+
+    # General defaults
+    "wallet_connect_id": "",
 }
 
 def run(
