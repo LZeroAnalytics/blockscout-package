@@ -401,7 +401,7 @@ def _create_frontend_service(plan, config, blockscout_service, ethereum_args, no
         "NEXT_PUBLIC_HAS_BEACON_CHAIN": config["has_beacon_chain"],
         "NEXT_PUBLIC_NETWORK_VERIFICATION_TYPE": "validation",
         "NEXT_PUBLIC_APP_PROTOCOL": config["api_protocol"],
-        "NEXT_PUBLIC_USE_NEXT_JS_PROXY": "false" if config["api_host"] else "true",
+        "NEXT_PUBLIC_USE_NEXT_JS_PROXY": "true",
     }
     
     if "frontend_env_vars" in ethereum_args:
