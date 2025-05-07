@@ -206,21 +206,23 @@ def _create_ethereum_backend(plan, config, postgres_output, verif_url, ethereum_
 
     env_vars = {
         "ETHEREUM_JSONRPC_VARIANT": "erigon" if el_client_name in ["erigon", "reth"] else el_client_name,
+        "DATABASE_URL": database_url,
+        "DATABASE_POOL_SIZE": "80",
         "ETHEREUM_JSONRPC_HTTP_URL": el_client_rpc_url,
         "ETHEREUM_JSONRPC_TRACE_URL": el_client_rpc_url,
         "ETHEREUM_JSONRPC_WS_URL": el_client_ws_url,
-        "DATABASE_URL": database_url,
+        "NETWORK": config["network_name"],
+        "SUBNETWORK": config["network_name"],
         "COIN": config["coin"],
+        "SECRET_KEY_BASE": "56NtB48ear7+wMSf0IQuWDAAazhpb31qyc7GiyspBP2vh7t5zlCsF5QDv76chXeN",
+        "ECTO_USE_SSL": "false",
+        "API_V2_ENABLED": "true",
+        "INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER": "true",
+
         "MICROSERVICE_SC_VERIFIER_ENABLED": "true",
         "MICROSERVICE_SC_VERIFIER_URL": verif_url,
         "MICROSERVICE_SC_VERIFIER_TYPE": "sc_verifier",
-        "INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER": "true",
-        "ECTO_USE_SSL": "false",
-        "NETWORK": config["network_name"],
-        "SUBNETWORK": config["network_name"],
-        "API_V2_ENABLED": "true",
         "PORT": str(config["http_port_number"]),
-        "SECRET_KEY_BASE": "56NtB48ear7+wMSf0IQuWDAAazhpb31qyc7GiyspBP2vh7t5zlCsF5QDv76chXeN",
         "SMART_CONTRACT_VERIFIER__SERVER__HTTP__ADDR": "0.0.0.0:{}".format(config["http_port_number_verif"]),
         "SMART_CONTRACT_VERIFIER__FETCHERS__ZKSYNC__ENABLED": "false",
     }
@@ -369,17 +371,20 @@ def _create_frontend_service(plan, config, blockscout_service, ethereum_args, no
     public_ports = frontend_used_ports
     
     rpc_url = ethereum_args.get("rpc_url", "http://localhost:8545")
+    if hasattr(config, "api_host"):
+        rpc_url = "https://" + config["api_host"].replace("blockscout-backend", "rpc")
     
     env_vars = {
-        "NEXT_PUBLIC_API_PROTOCOL": config["api_protocol"],
-        "NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL": config["ws_protocol"],
-        "NEXT_PUBLIC_NETWORK_NAME": config["network_name"],
-        "NEXT_PUBLIC_NETWORK_ID": config["network_id"],
-        "NEXT_PUBLIC_NETWORK_RPC_URL": rpc_url,
         "NEXT_PUBLIC_API_HOST": config["api_host"] if hasattr(config, "api_host") else "{}:{}".format(
             blockscout_service.ip_address,
             blockscout_service.ports[config["http_port_id"]].number,
         ),
+        "NEXT_PUBLIC_NETWORK_ID": config["network_id"],
+        "NEXT_PUBLIC_APP_HOST": config["app_host"],
+        "NEXT_PUBLIC_API_PROTOCOL": config["api_protocol"],
+        "NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL": config["ws_protocol"],
+        "NEXT_PUBLIC_NETWORK_NAME": config["network_name"],
+        "NEXT_PUBLIC_NETWORK_RPC_URL": rpc_url,
         "NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID": config["wallet_connect_id"],
         "NEXT_PUBLIC_AD_BANNER_PROVIDER": "none",
         "NEXT_PUBLIC_AD_TEXT_PROVIDER": "none",
@@ -388,10 +393,9 @@ def _create_frontend_service(plan, config, blockscout_service, ethereum_args, no
         "NEXT_PUBLIC_HAS_BEACON_CHAIN": config["has_beacon_chain"],
         "NEXT_PUBLIC_NETWORK_VERIFICATION_TYPE": "validation",
         "NEXT_PUBLIC_APP_PROTOCOL": config["api_protocol"],
-        "NEXT_PUBLIC_APP_HOST": config["app_host"],
+
         "NEXT_PUBLIC_APP_PORT": str(config["http_port_number_frontend"]),
-        "NEXT_PUBLIC_USE_NEXT_JS_PROXY": "true",
-        "PORT": str(config["http_port_number_frontend"]),
+        "NEXT_PUBLIC_USE_NEXT_JS_PROXY": "false" if hasattr(config, "api_host") else "true",
     }
     
     if "frontend_env_vars" in ethereum_args:
