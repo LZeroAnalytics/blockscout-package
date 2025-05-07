@@ -27,10 +27,10 @@ DEFAULT_VALUES = {
     
     # Image defaults
     "postgres_image": "library/postgres:alpine",
-    "blockscout_image": "blockscout/blockscout:latest",
+    "blockscout_image": "ghcr.io/blockscout/blockscout:8.0.2",
     "blockscout_optimism_image": "blockscout/blockscout-optimism:6.8.0",
     "blockscout_verifier_image": "ghcr.io/blockscout/smart-contract-verifier:latest",
-    "blockscout_frontend_image": "ghcr.io/blockscout/frontend:latest",
+    "blockscout_frontend_image": "ghcr.io/blockscout/frontend:v2.0.1",
     
     # Ethereum defaults
     "network_name": "Bloctopus",
